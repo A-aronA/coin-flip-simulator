@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f7f9" />
+    <title>Coin Flip Simulator — A little chance, just for fun</title>
+    <meta
+      name="description"
+      content="Pick Heads or Tails, flip an original coin, and play with fictional credits. A free, simple coin flip simulator with a separate Safe Bank."
+    />
+    <meta property="og:title" content="Coin Flip Simulator" />
+    <meta
+      property="og:description"
+      content="A little chance, just for fun. Fictional credits only."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Coin Flip Simulator" />
+    <meta
+      name="twitter:description"
+      content="Pick a side. Give chance a spin. Fictional credits only."
+    />
+    <!-- BUILD_METADATA -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <main>
+      <div id="root"></div>
+      <noscript
+        ><h1>Coin Flip Simulator</h1>
+        <p>
+          Enable JavaScript to play this free fictional-credit game.
+        </p></noscript
+      >
+      <section class="supporting" aria-label="About this simulator">
+        <div class="section-kicker">A LITTLE CONTEXT</div>
+        <h2>Simple rules. A fresh chance.</h2>
+        <details id="how-to-play">
+          <summary>How to play</summary>
+          <p>
+            Choose Heads or Tails, enter a wager from $0.01 to $100.00, then
+            flip. Quick amounts only fill the field. Each flip uses an
+            independent, unbiased bit from your browser’s secure random source.
+          </p>
+          <p>
+            A winning $10 wager returns $20 including your $10 stake: a $10 net
+            profit. A loss costs the $10 stake. The $100 cap applies to each
+            wager, even when your balance is larger.
+          </p>
+        </details>
+        <details>
+          <summary>Heads, Tails &amp; the odds</summary>
+          <p>
+            Both sides have a 50/50 chance on every flip. Short sequences need
+            not contain equal numbers of each side. A streak does not predict
+            the next result; your balance, wager, and previous outcomes do not
+            influence it.
+          </p>
+        </details>
+        <details>
+          <summary>Your Safe Bank &amp; optional rewards</summary>
+          <p>
+            Move credits between Available and Safe Bank at no cost. Banked
+            credits never automatically fund a wager. Transfers have no $100 cap
+            and do not change your total credits.
+          </p>
+          <p>
+            When configured and available, optional rewarded ads can add $10 of
+            fictional credit or a disclosed bonus of 1% of a winning gross
+            payout, rounded to the nearest cent. Base winnings never depend on
+            ads. Advertising is disabled by default.
+          </p>
+        </details>
+        <details id="privacy">
+          <summary>Privacy</summary>
+          <p>
+            This app stores balances, statistics, and recent rounds in your
+            browser’s localStorage. It has no accounts, server wallet, default
+            analytics, or default third-party requests. Browser storage can be
+            edited or cleared, belongs to this origin, and does not sync between
+            devices. It is not authentication or a tamper-proof wallet.
+          </p>
+          <p>
+            Session-only mode keeps progress in memory until the page closes. If
+            advertising is enabled later, providers may process additional data;
+            deployment requires an appropriate provider/CMP integration and
+            updated disclosures.
+          </p>
+        </details>
+        <details id="terms">
+          <summary>Terms &amp; fictional credits</summary>
+          <p>
+            For entertainment, intended for adults 18+. Fictional credits only.
+            No purchases, cash value, transfers to other people, prizes,
+            redemption, or real-money gambling. Safe Bank transfers occur only
+            within this local game. Progress may be lost if browser data is
+            cleared. The 18+ notice is not a substitute for any
+            publisher-required age controls.
+          </p>
+        </details>
+        <footer>
+          <span>Made for a moment of chance.</span>
+          <nav aria-label="Information">
+            <a href="#privacy">Privacy</a><a href="#terms">Terms</a>
+          </nav>
+        </footer>
+      </section>
+    </main>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
