@@ -3,47 +3,25 @@ import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import type { Plugin } from "vite";
 import { readAdConfig } from "./src/ads/config.ts";
+import { siteMetadata } from "./scripts/site-metadata.ts";
 function metadata(env: Record<string, string>): Plugin {
-  let url = "";
-  if (env.VITE_SITE_URL) {
-    const u = new URL(env.VITE_SITE_URL);
-    if (
-      u.protocol !== "https:" ||
-      u.username ||
-      u.password ||
-      u.search ||
-      u.hash ||
-      u.pathname !== "/" ||
-      u.hostname === "localhost" ||
-      u.hostname.endsWith(".example") ||
-      ["example.com", "example.org", "example.net"].includes(u.hostname) ||
-      u.hostname.endsWith(".test") ||
-      u.hostname.endsWith(".invalid") ||
-      u.hostname === "127.0.0.1"
-    )
-      throw new Error("VITE_SITE_URL must be a real production HTTPS URL.");
-    url = u.href.replace(/\/$/, "");
-  }
-  const indexed = !!url && env.VITE_ALLOW_INDEXING === "true";
+  const meta = siteMetadata(env);
   return {
     name: "local-site-metadata",
     transformIndexHtml(html) {
-      return html.replace(
-        "<!-- BUILD_METADATA -->",
-        `<meta name="robots" content="${indexed ? "index,follow" : "noindex,nofollow"}">${url ? `<link rel="canonical" href="${url}/"><meta property="og:url" content="${url}/"><meta property="og:image" content="${url}/share.png"><meta name="twitter:image" content="${url}/share.png">` : ""}`,
-      );
+      return html.replace("<!-- BUILD_METADATA -->", meta.head);
     },
     generateBundle() {
       this.emitFile({
         type: "asset",
         fileName: "robots.txt",
-        source: `User-agent: *\n${indexed ? `Allow: /\nSitemap: ${url}/sitemap.xml` : "Disallow: /"}\n`,
+        source: meta.robots,
       });
-      if (url && indexed)
+      if (meta.sitemap)
         this.emitFile({
           type: "asset",
           fileName: "sitemap.xml",
-          source: `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${url}/</loc></url></urlset>`,
+          source: meta.sitemap,
         });
     },
   };

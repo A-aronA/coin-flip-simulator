@@ -11,5 +11,11 @@
     "allowImportingTsExtensions": true,
     "types": ["vite/client", "vitest/globals", "node", "google-publisher-tag"]
   },
-  "include": ["src", "tests", "vite.config.ts", "playwright.config.ts"]
+  "include": [
+    "src",
+    "scripts",
+    "tests",
+    "vite.config.ts",
+    "playwright.config.ts"
+  ]
 }
