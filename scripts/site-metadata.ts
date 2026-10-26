@@ -48,7 +48,7 @@ export function siteMetadata(env: Record<string, string | undefined>) {
     siteUrl = url.href.replace(/\/$/, "");
   }
   const indexed = !!siteUrl && env.VITE_ALLOW_INDEXING === "true";
-  const head = `<meta name="robots" content="${indexed ? "index,follow" : "noindex,nofollow"}">${siteUrl ? `<link rel="canonical" href="${siteUrl}/"><meta property="og:url" content="${siteUrl}/"><meta property="og:image" content="${siteUrl}/share.png"><meta name="twitter:image" content="${siteUrl}/share.png">` : ""}`;
+  const head = `<meta name="robots" content="${indexed ? "index,follow" : "noindex,nofollow"}">${siteUrl ? `<link rel="canonical" href="${siteUrl}/"><meta property="og:url" content="${siteUrl}/"><meta property="og:image" content="${siteUrl}/share.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Coin Flip Simulator — fictional credits only"><meta name="twitter:image" content="${siteUrl}/share.png"><meta name="twitter:image:alt" content="Coin Flip Simulator — fictional credits only">` : ""}`;
   return {
     siteUrl,
     indexed,

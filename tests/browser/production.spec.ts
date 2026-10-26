@@ -27,17 +27,36 @@ test("production smoke: gameplay, assets, metadata, no mocks or third-party requ
   await expect(available(page)).toHaveText("$101.00");
   await page.reload();
   await expect(available(page)).toHaveText("$101.00");
+  const siteUrl = process.env.VITE_SITE_URL?.replace(/\/$/, "");
+  const indexable = !!siteUrl && process.env.VITE_ALLOW_INDEXING === "true";
   expect(
     await page.locator('meta[name="robots"]').getAttribute("content"),
-  ).toBe("noindex,nofollow");
-  await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+  ).toBe(indexable ? "index,follow" : "noindex,nofollow");
+  if (siteUrl) {
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      "href",
+      `${siteUrl}/`,
+    );
+  } else {
+    await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+  }
   expect((await request.get("/favicon.svg")).ok()).toBe(true);
   expect((await request.get("/share.png")).headers()["content-type"]).toContain(
     "image/png",
   );
-  expect(await (await request.get("/robots.txt")).text()).toContain(
-    "Disallow: /",
-  );
+  const robots = await (await request.get("/robots.txt")).text();
+  if (indexable) {
+    expect(robots).toContain("Allow: /");
+    expect(robots).not.toContain("Disallow: /");
+    expect(robots).toContain(`Sitemap: ${siteUrl}/sitemap.xml`);
+    const sitemap = await request.get("/sitemap.xml");
+    expect(sitemap.headers()["content-type"]).not.toContain("text/html");
+    expect(await sitemap.text()).toContain(`<loc>${siteUrl}/</loc>`);
+  } else {
+    expect(robots).toContain("Disallow: /");
+  }
+  await expect(page.locator("#privacy")).toContainText("Cloudflare Pages");
+  await expect(page.locator("#terms")).toContainText("withdraw real money");
   expect(errors).toEqual([]);
   expect(external).toEqual([]);
 });

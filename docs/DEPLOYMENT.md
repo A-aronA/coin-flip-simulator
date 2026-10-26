@@ -1,12 +1,12 @@
 # Static deployment preparation
 
-Nothing was published. The app needs only static hosting, with no Functions, Workers, backend or paid infrastructure.
+The website is hosted at **https://coin-flip-simulator.pages.dev/** from the existing repository **https://github.com/A-aronA/coin-flip-simulator**, branch `master`. It uses static hosting, with no Functions, Workers or application backend.
 
 ## Cloudflare Pages
 
 Follow the current [Cloudflare React guide](https://developers.cloudflare.com/pages/framework-guides/deploy-a-react-site/). Use Node 24 LTS, install with `npm ci`, build command **`npm run build`**, output directory **`dist`**, and this project as the root directory. The checked-in npm lockfile pins the dependency graph. Preview locally with `npm run preview` after building. No deployment command is included or required for local work.
 
-For the first deployment, use these settings when you create the Pages project yourself:
+Use these settings for the reviewed production site. Preview builds should retain `VITE_ALLOW_INDEXING=false`:
 
 | Setting                      | Value                                                                                                               |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------- |
@@ -19,8 +19,8 @@ For the first deployment, use these settings when you create the Pages project y
 | Dependency installation      | Keep Pages automatic installation enabled and include development dependencies, which contain Vite and TypeScript   |
 | `VITE_AD_PROVIDER`           | **`disabled`**                                                                                                      |
 | `VITE_AD_CONSENT_CONFIGURED` | **`false`**                                                                                                         |
-| `VITE_SITE_URL`              | Leave unset until you know the actual public HTTPS origin                                                           |
-| `VITE_ALLOW_INDEXING`        | **`false`** for the first unknown-domain deployment and previews                                                    |
+| `VITE_SITE_URL`              | **`https://coin-flip-simulator.pages.dev`**                                                                         |
+| `VITE_ALLOW_INDEXING`        | **`true`** in reviewed production; **`false`** for previews                                                         |
 
 The [Pages build configuration](https://developers.cloudflare.com/pages/configuration/build-configuration/) lists this React/Vite command and output directory. Its [build image documentation](https://developers.cloudflare.com/pages/configuration/build-image/) supports Node overrides through `.nvmrc` or `NODE_VERSION`. This is a static SPA; no Worker, Functions directory, Wrangler account setup, SPA router or custom server is required. Cloudflare Pages supplies its normal SPA fallback, so an all-path rewrite is unnecessary.
 
@@ -45,7 +45,7 @@ There is no structured data, fabricated review/rating, placeholder operator or i
 
 Commit `package-lock.json`, application source, tests, `.env.example` (public defaults only), and the static assets. Git ignores `node_modules`, `dist`, generated test/coverage reports, `outputs`, scratch files, logs, `.env` and all `.env.*` variants except `.env.example`, local Cloudflare `.dev.vars`/`.wrangler` state, `.npmrc`, and common private-key/credential files. Never assume ignore rules can detect credentials embedded in application source: every `VITE_` value is public and must be checked before committing.
 
-No Git remote was configured at the pre-deployment review. Creating a repository, adding a remote, pushing, connecting Cloudflare and deploying remain operator actions; none is performed by the build scripts.
+The existing `origin` points to `https://github.com/A-aronA/coin-flip-simulator.git`. Cloudflare is connected to `master` with automatic deployments enabled. No additional repository or infrastructure is needed. Build scripts themselves never push or deploy.
 
 ## Advertising, consent and headers
 
@@ -55,15 +55,15 @@ Leave all advertising disabled for the first deployment unless [AD_INTEGRATION.m
 
 ## Publication tasks
 
-1. Supply the real operator identity/contact information where applicable and review visible Terms/Privacy for the actual deployment and audience, including any relevant hosting/CDN data processing. No operator identity, contact address or legal approval has been invented.
+1. Keep Privacy/Terms consistent with the independently operated California website and its actual hosting/data practices. The operator has chosen not to provide a public contact method or registered entity; no personal identity or invented contact is published. The launch review records the limitations of this choice and circumstances that require reassessment.
 2. Confirm game classification, applicable publisher/age requirements, account/site/inventory eligibility and permitted demand before enabling monetization. The 18+ notice is not a compliance guarantee.
 3. Configure production URL/indexing separately from previews; test robots, sitemap, sharing previews and static headers on the real origin.
 4. Run the documented checks. Manually verify mobile, keyboard and reduced motion on target browsers; only Chromium is included in the local execution report.
 5. Test live ad inventory and CMP behavior only after legitimate approval/configuration. No fill, revenue or complete browser-crash reward recovery is promised.
 
-No accounts have been connected, and no publication, purchase, publisher-account change or live ad request was made during development.
+Live advertising remains disabled. No purchase, additional infrastructure, or publisher-account change is needed for SEO activation.
 
-## First-deployment review
+## Historical first-deployment review (October 24, 2026)
 
 The local pre-deployment review passed type checking, linting, 124 unit/component/configuration tests, 21 Chromium browser tests (including the production preview), the production build, and the production dependency audit (zero reported vulnerabilities). The lockfile installation dry run also passed. Browser tests included reduced motion, keyboard access, responsive layouts and accessibility checks. Firefox/WebKit, the actual Cloudflare build environment and real ad inventory were not executed locally.
 

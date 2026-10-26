@@ -1,6 +1,6 @@
 # Coin Flip Simulator
 
-A free, local-first React + TypeScript coin game using **fictional credits only**. No accounts, backend, payments, analytics, purchases, prizes, or deployment are included. Advertising is off by default.
+A free, local-first React + TypeScript coin game using **fictional credits only**, hosted at **https://coin-flip-simulator.pages.dev/**. There are no game accounts, application backend, payments, analytics integrations, purchases or prizes. Live advertising remains disabled.
 
 ## Run locally
 
@@ -57,4 +57,4 @@ localStorage is user-editable, clearable, origin-specific, and does not sync dev
 
 The consent interface denies requests until a real deployment CMP supplies a decision. Production post-win rewarded placement remains disabled because variable reward mapping has not been verified as provider-supported. The fixed $10 GPT refill adapter is implemented but requires publisher setup, classification review, consent integration, eligible inventory and genuine-inventory testing. No fill or revenue is promised.
 
-See [ad integration](docs/AD_INTEGRATION.md), [deployment](docs/DEPLOYMENT.md), and [third-party notices](THIRD_PARTY_NOTICES.md). Add the real operator/contact details and review the visible Privacy/Terms before publication. The local SVG sharing artwork is original; PNG is supplied for social-preview compatibility. No site has been published.
+See [ad integration](docs/AD_INTEGRATION.md), [deployment](docs/DEPLOYMENT.md), [launch/content review](docs/LAUNCH_REVIEW.md), and [third-party notices](THIRD_PARTY_NOTICES.md). The independently operated California website currently has no registered entity or public contact method; the review records the operator's supplied facts and the limits of that choice without publishing personal contact details. The local SVG sharing artwork is original; PNG is supplied for social-preview compatibility. Production indexing uses the supplied Pages origin and an explicit production-only configuration; previews remain noindex.
