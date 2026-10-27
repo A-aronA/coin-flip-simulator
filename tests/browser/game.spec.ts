@@ -98,6 +98,51 @@ test("reduced motion, keyboard focus, validation and held Enter", async ({
   expect((await readSave(page)).stats.rounds).toBe(1);
   await expect(input).toBeFocused();
 });
+test("last-wager shortcuts work on mobile and survive reload without placing a bet", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 900 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await outcomes(page, [0]);
+  await load(page);
+  const wager = page.getByLabel("Your wager Fictional credits");
+  const double = page.getByRole("button", {
+    name: "Double wager",
+    exact: true,
+  });
+  const triple = page.getByRole("button", {
+    name: "Triple wager",
+    exact: true,
+  });
+  await expect(double).toBeDisabled();
+  await expect(triple).toBeDisabled();
+  await wager.fill("1.01");
+  await flip(page);
+  await double.focus();
+  await double.press("Enter");
+  await expect(wager).toHaveValue("2.02");
+  await wager.fill("7.00");
+  await triple.click();
+  await expect(wager).toHaveValue("3.03");
+  expect((await readSave(page)).stats.rounds).toBe(1);
+  await expect(available(page)).toHaveText("$101.01");
+  await page.reload();
+  await double.click();
+  await expect(wager).toHaveValue("2.02");
+  expect((await readSave(page)).stats.rounds).toBe(1);
+  await wager.fill("50.00");
+  await flip(page);
+  await expect(double).toBeEnabled();
+  await expect(triple).toBeDisabled();
+  await double.click();
+  await expect(wager).toHaveValue("100.00");
+  expect((await readSave(page)).stats.rounds).toBe(2);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+});
 test("secondary tabs synchronize and can take ownership after the writer closes", async ({
   page,
   context,
