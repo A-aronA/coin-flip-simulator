@@ -249,6 +249,7 @@ export default function App() {
       ? snapshot.last.before - snapshot.last.wager
       : snapshot.available
     : 0;
+  const lastWager = snapshot?.last?.wager;
   let wagerError = "";
   if (wager.trim()) {
     try {
@@ -478,6 +479,44 @@ export default function App() {
                     Max
                   </button>
                 </div>
+                <div
+                  className="quick-bets wager-multipliers"
+                  role="group"
+                  aria-label="Last wager shortcuts"
+                  aria-describedby={`${wagerId}-last`}
+                >
+                  {([2, 3] as const).map((multiplier) => {
+                    const amount = (lastWager ?? 0) * multiplier;
+                    const reason = !lastWager
+                      ? "Play a round first."
+                      : amount > 10000
+                        ? "This would exceed the $100.00 wager limit."
+                        : amount > snapshot.available
+                          ? "This would exceed your available credits."
+                          : `Set the next wager to ${formatMoney(amount)}.`;
+                    return (
+                      <button
+                        key={multiplier}
+                        type="button"
+                        disabled={
+                          locked ||
+                          !lastWager ||
+                          amount > 10000 ||
+                          amount > snapshot.available
+                        }
+                        title={reason}
+                        onClick={() => setWager(plainAmount(amount))}
+                      >
+                        {multiplier === 2 ? "Double wager" : "Triple wager"}
+                      </button>
+                    );
+                  })}
+                </div>
+                <p className="input-help" id={`${wagerId}-last`}>
+                  {lastWager
+                    ? `Based on your last wager of ${formatMoney(lastWager)}.`
+                    : "Play a round to use the last wager shortcuts."}
+                </p>
                 <p className="input-help" id={`${wagerId}-help`}>
                   Use a decimal amount with up to 2 decimal places.
                 </p>
