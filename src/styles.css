@@ -543,6 +543,9 @@ fieldset {
   background: #f2f5fc;
   border-color: #e0e7f7;
 }
+.wager-multipliers button {
+  font-size: 11px;
+}
 .input-help {
   font-size: 10px;
   color: #68768b;
